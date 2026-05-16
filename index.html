@@ -1,1 +1,124 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Help Pro</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
+}
+
+header{
+text-align:center;
+padding:20px;
+font-size:24px;
+font-weight:bold;
+background:rgba(255,255,255,0.05);
+}
+
+.container{
+max-width:800px;
+margin:auto;
+padding:15px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+padding:20px;
+margin-top:15px;
+border-radius:15px;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:10px;
+background:#38bdf8;
+color:black;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+}
+
+.chat{
+height:150px;
+overflow:auto;
+background:rgba(0,0,0,0.3);
+padding:10px;
+border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🚀 English Help Pro</header>
+
+<div class="container">
+
+<div class="card">
+<h2>📘 Quiz</h2>
+<p>Past of "go"?</p>
+<button onclick="alert('went')">went</button>
+<button onclick="alert('wrong')">goed</button>
+</div>
+
+<div class="card">
+<h2>📝 Test</h2>
+<p>I ___ a student</p>
+<input id="test">
+<button onclick="check()">Check</button>
+<p id="res"></p>
+</div>
+
+<div class="card">
+<h2>🤖 Chat</h2>
+<div class="chat" id="chat"></div>
+<input id="msg">
+<button onclick="send()">Send</button>
+</div>
+
+</div>
+
+<script>
+function check(){
+let v=document.getElementById("test").value;
+document.getElementById("res").innerText =
+v=="am" ? "Correct ✔️" : "Wrong ❌";
+}
+
+function send(){
+let msg=document.getElementById("msg");
+let chat=document.getElementById("chat");
+
+if(!msg.value) return;
+
+chat.innerHTML += "You: "+msg.value+"<br>";
+
+let reply="I don't know 🤖";
+
+if(msg.value.includes("hello")) reply="Hi! 👋";
+if(msg.value.includes("go")) reply="go → went";
+
+chat.innerHTML += "Bot: "+reply+"<br>";
+
+msg.value="";
+}
+</script>
+
+</body>
+  </html>
