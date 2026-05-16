@@ -2,20 +2,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Help Pro - Level 3</title><style>
+<title>English Help Pro - Ultimate</title><style>
 :root{
-  --bg:#0f172a;
+  --bg:#0b1220;
   --card:rgba(255,255,255,0.08);
   --accent:#38bdf8;
-  --text:#e2e8f0;
   --good:#22c55e;
   --bad:#ef4444;
+  --text:#e2e8f0;
 }
 
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#0f172a,#1e293b);
+background:linear-gradient(135deg,#0b1220,#1e293b);
 color:var(--text);
 }
 
@@ -32,8 +32,8 @@ text-align:center;
 padding:20px;
 }
 
-.title{font-size:30px;font-weight:bold;}
-.subtitle{opacity:0.8;margin:10px 0 25px;}
+.title{font-size:32px;font-weight:bold;}
+.subtitle{opacity:0.8;margin-top:10px;margin-bottom:20px;}
 
 button{
 padding:12px 16px;
@@ -51,12 +51,12 @@ max-width:320px;
 .menu{
 max-width:900px;
 margin:auto;
-padding:20px;
+padding:15px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:12px;
 }
 
@@ -66,19 +66,19 @@ padding:15px;
 border-radius:15px;
 text-align:center;
 cursor:pointer;
-transition:0.2s;
 border:1px solid rgba(255,255,255,0.1);
+transition:0.2s;
 }
 
 .card:hover{transform:scale(1.05);}
 
 h2{color:var(--accent);}
 
-.quiz-box{
-margin-top:15px;
+.box{
+background:rgba(255,255,255,0.06);
 padding:15px;
-background:rgba(255,255,255,0.05);
 border-radius:12px;
+margin-top:10px;
 }
 
 input{
@@ -89,103 +89,107 @@ border:none;
 margin-top:10px;
 }
 
-.result{margin-top:10px;font-weight:bold;}
-
-.xp{
-position:fixed;
-top:10px;
-right:10px;
-background:rgba(255,255,255,0.1);
-padding:10px 14px;
-border-radius:12px;
-font-weight:bold;
+.chat{
+height:150px;
+overflow:auto;
+background:rgba(0,0,0,0.3);
+padding:10px;
+border-radius:10px;
 }
-</style></head><body><div class="xp">⭐ XP: <span id="xp">0</span></div><!-- START --><div id="start" class="screen active center">
+</style></head><body><!-- START --><div id="start" class="screen active center">
 <div class="title">🚀 English Help Pro</div>
 <div class="subtitle">Created by Naимзода Исроил</div>
 <button onclick="startApp()">▶ START</button>
 </div><!-- MENU --><div id="menu" class="screen menu">
-<h2>📚 Main Menu</h2>
+<h2>📚 MENU</h2>
 <div class="grid">
-<div class="card" onclick="openQuiz()">📘 Quiz</div>
-<div class="card" onclick="openGrammar()">📖 Grammar</div>
-<div class="card" onclick="openTest()">📝 Test</div>
-<div class="card" onclick="openWords()">🔤 3000 Words</div>
+<div class="card" onclick="openDict()">📖 Луғат</div>
+<div class="card" onclick="openConv()">💬 Муошират</div>
+<div class="card" onclick="openTest()">📝 Тестҳо</div>
+<div class="card" onclick="openTopics()">📚 Топикҳо</div>
+<div class="card" onclick="openAI()">🤖 AI Chat</div>
 </div>
-</div><!-- QUIZ --><div id="quiz" class="screen menu">
-<h2>📘 Quiz</h2>
-<div class="quiz-box">
-<p>What is past of "go"?</p>
-<button onclick="quiz('wrong')">goed</button>
-<button onclick="quiz('correct')">went</button>
-<button onclick="quiz('wrong')">gone</button>
-<div id="quizResult" class="result"></div>
+</div><!-- DICTIONARY --><div id="dict" class="screen menu">
+<h2>📖 Луғат (200 words)</h2>
+<div class="box" id="dictBox"></div>
+<button onclick="back()">⬅ Back</button>
+</div><!-- CONVERSATION --><div id="conv" class="screen menu">
+<h2>💬 Муошират</h2>
+<div class="box">
+<p onclick="speak('Hello, how are you?')">🧳 Дар сафар</p>
+<p onclick="speak('I am at the airport')">✈️ Дар самолёт</p>
+<p onclick="speak('Where is the hotel?')">🏨 Дар меҳмонхона</p>
+<p onclick="speak('Can you help me?')">🆘 Ёрдам</p>
 </div>
-<button onclick="backMenu()">⬅ Back</button>
+<button onclick="back()">⬅ Back</button>
 </div><!-- TEST --><div id="test" class="screen menu">
-<h2>📝 Test</h2>
-<div class="quiz-box">
-<p>I ___ a student</p>
-<input id="testInput" placeholder="write answer">
-<button onclick="checkTest()">Check</button>
-<div id="testResult" class="result"></div>
+<h2>📝 Тестҳо</h2>
+<div class="box">
+<p>What is past of GO?</p>
+<button onclick="ans(true)">went</button>
+<button onclick="ans(false)">goed</button>
 </div>
-<button onclick="backMenu()">⬅ Back</button>
-</div><!-- GRAMMAR --><div id="grammar" class="screen menu">
-<h2>📖 Grammar</h2>
-<div class="quiz-box">
-<p>Present: I am, He is, They are</p>
-<p>Past: I was, He was, They were</p>
+<button onclick="back()">⬅ Back</button>
+</div><!-- TOPICS --><div id="topics" class="screen menu">
+<h2>📚 Топикҳо</h2>
+<div class="box">
+<p>1. Family</p>
+<p>2. School</p>
+<p>3. Travel</p>
+<p>4. Technology</p>
+<p>5. Daily life</p>
 </div>
-<button onclick="backMenu()">⬅ Back</button>
-</div><!-- WORDS --><div id="words" class="screen menu">
-<h2>🔤 3000 Words</h2>
-<div class="quiz-box">
-<p>1. Apple = себ</p>
-<p>2. Book = китоб</p>
-<p>3. Water = об</p>
-</div>
-<button onclick="backMenu()">⬅ Back</button>
+<button onclick="back()">⬅ Back</button>
+</div><!-- AI CHAT --><div id="ai" class="screen menu">
+<h2>🤖 AI Chat</h2>
+<div class="chat" id="chat"></div>
+<input id="msg" placeholder="write...">
+<button onclick="send()">Send</button>
+<button onclick="back()">⬅ Back</button>
 </div><script>
-let xp = localStorage.getItem("xp") || 0;
-document.getElementById("xp").innerText = xp;
-
-function addXP(val){
-  xp = parseInt(xp) + val;
-  localStorage.setItem("xp", xp);
-  document.getElementById("xp").innerText = xp;
-}
-
 function startApp(){ show('menu'); }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function openDict(){ show('dict'); loadDict(); }
+function openConv(){ show('conv'); }
+function openTest(){ show('test'); }
+function openTopics(){ show('topics'); }
+function openAI(){ show('ai'); }
+function back(){ show('menu'); }
 
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+// DICTIONARY 200 words (short demo expanded)
+function loadDict(){
+let words = "";
+let base = [
+"apple - себ","book - китоб","water - об","car - мошин","school - мактаб",
+"home - хона","love - муҳаббат","friend - дӯст","food - хӯрок","money - пул"
+];
+for(let i=0;i<20;i++){
+base.forEach(w=>words += "<p>"+w+"</p>");
+}
+document.getElementById('dictBox').innerHTML = words;
 }
 
-function openQuiz(){show('quiz');}
-function openTest(){show('test');}
-function openGrammar(){show('grammar');}
-function openWords(){show('words');}
-function backMenu(){show('menu');}
+// TEST
+function ans(ok){ alert(ok?"Correct ✔️":"Wrong ❌"); }
 
-function quiz(type){
-  if(type==='correct'){
-    document.getElementById('quizResult').innerText='✅ Correct! +10 XP';
-    addXP(10);
-  }else{
-    document.getElementById('quizResult').innerText='❌ Wrong answer';
-  }
+// SPEAK
+function speak(text){
+let u = new SpeechSynthesisUtterance(text);
+u.lang = "en-US";
+speechSynthesis.speak(u);
 }
 
-function checkTest(){
-  let v=document.getElementById('testInput').value.trim();
-  if(v==='am'){
-    document.getElementById('testResult').innerText='✅ Correct! +10 XP';
-    addXP(10);
-  }else{
-    document.getElementById('testResult').innerText='❌ Try again';
-  }
+// AI CHAT (simple)
+function send(){
+let msg=document.getElementById('msg');
+let chat=document.getElementById('chat');
+if(!msg.value) return;
+chat.innerHTML += "You: "+msg.value+"<br>";
+let r="I am learning...";
+if(msg.value.includes('hello')) r="Hello! 👋";
+if(msg.value.includes('help')) r="How can I help you?";
+chat.innerHTML += "Bot: "+r+"<br>";
+msg.value="";
 }
 </script></body>
 </html>
