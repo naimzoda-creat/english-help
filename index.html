@@ -1,124 +1,191 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="tg">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Help Pro</title>
+<title>English Help Pro - Level 3</title><style>
+:root{
+  --bg:#0f172a;
+  --card:rgba(255,255,255,0.08);
+  --accent:#38bdf8;
+  --text:#e2e8f0;
+  --good:#22c55e;
+  --bad:#ef4444;
+}
 
-<style>
 body{
 margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#0f172a,#1e293b);
-color:white;
+color:var(--text);
 }
 
-header{
+.screen{display:none;}
+.active{display:block;}
+
+.center{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+height:100vh;
 text-align:center;
 padding:20px;
-font-size:24px;
-font-weight:bold;
-background:rgba(255,255,255,0.05);
 }
 
-.container{
-max-width:800px;
+.title{font-size:30px;font-weight:bold;}
+.subtitle{opacity:0.8;margin:10px 0 25px;}
+
+button{
+padding:12px 16px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:var(--accent);
+color:#001018;
+font-weight:bold;
+margin:6px;
+width:100%;
+max-width:320px;
+}
+
+.menu{
+max-width:900px;
 margin:auto;
-padding:15px;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:12px;
 }
 
 .card{
-background:rgba(255,255,255,0.08);
-padding:20px;
-margin-top:15px;
+background:var(--card);
+padding:15px;
 border-radius:15px;
+text-align:center;
+cursor:pointer;
+transition:0.2s;
+border:1px solid rgba(255,255,255,0.1);
 }
 
-button{
-padding:10px;
-border:none;
-border-radius:10px;
-background:#38bdf8;
-color:black;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
+.card:hover{transform:scale(1.05);}
+
+h2{color:var(--accent);}
+
+.quiz-box{
+margin-top:15px;
+padding:15px;
+background:rgba(255,255,255,0.05);
+border-radius:12px;
 }
 
 input{
 width:100%;
 padding:10px;
-margin-top:10px;
 border-radius:10px;
 border:none;
+margin-top:10px;
 }
 
-.chat{
-height:150px;
-overflow:auto;
-background:rgba(0,0,0,0.3);
-padding:10px;
-border-radius:10px;
+.result{margin-top:10px;font-weight:bold;}
+
+.xp{
+position:fixed;
+top:10px;
+right:10px;
+background:rgba(255,255,255,0.1);
+padding:10px 14px;
+border-radius:12px;
+font-weight:bold;
 }
-</style>
-</head>
-
-<body>
-
-<header>🚀 English Help Pro</header>
-
-<div class="container">
-
-<div class="card">
+</style></head><body><div class="xp">⭐ XP: <span id="xp">0</span></div><!-- START --><div id="start" class="screen active center">
+<div class="title">🚀 English Help Pro</div>
+<div class="subtitle">Created by Naимзода Исроил</div>
+<button onclick="startApp()">▶ START</button>
+</div><!-- MENU --><div id="menu" class="screen menu">
+<h2>📚 Main Menu</h2>
+<div class="grid">
+<div class="card" onclick="openQuiz()">📘 Quiz</div>
+<div class="card" onclick="openGrammar()">📖 Grammar</div>
+<div class="card" onclick="openTest()">📝 Test</div>
+<div class="card" onclick="openWords()">🔤 3000 Words</div>
+</div>
+</div><!-- QUIZ --><div id="quiz" class="screen menu">
 <h2>📘 Quiz</h2>
-<p>Past of "go"?</p>
-<button onclick="alert('went')">went</button>
-<button onclick="alert('wrong')">goed</button>
+<div class="quiz-box">
+<p>What is past of "go"?</p>
+<button onclick="quiz('wrong')">goed</button>
+<button onclick="quiz('correct')">went</button>
+<button onclick="quiz('wrong')">gone</button>
+<div id="quizResult" class="result"></div>
 </div>
-
-<div class="card">
+<button onclick="backMenu()">⬅ Back</button>
+</div><!-- TEST --><div id="test" class="screen menu">
 <h2>📝 Test</h2>
+<div class="quiz-box">
 <p>I ___ a student</p>
-<input id="test">
-<button onclick="check()">Check</button>
-<p id="res"></p>
+<input id="testInput" placeholder="write answer">
+<button onclick="checkTest()">Check</button>
+<div id="testResult" class="result"></div>
 </div>
-
-<div class="card">
-<h2>🤖 Chat</h2>
-<div class="chat" id="chat"></div>
-<input id="msg">
-<button onclick="send()">Send</button>
+<button onclick="backMenu()">⬅ Back</button>
+</div><!-- GRAMMAR --><div id="grammar" class="screen menu">
+<h2>📖 Grammar</h2>
+<div class="quiz-box">
+<p>Present: I am, He is, They are</p>
+<p>Past: I was, He was, They were</p>
 </div>
-
+<button onclick="backMenu()">⬅ Back</button>
+</div><!-- WORDS --><div id="words" class="screen menu">
+<h2>🔤 3000 Words</h2>
+<div class="quiz-box">
+<p>1. Apple = себ</p>
+<p>2. Book = китоб</p>
+<p>3. Water = об</p>
 </div>
+<button onclick="backMenu()">⬅ Back</button>
+</div><script>
+let xp = localStorage.getItem("xp") || 0;
+document.getElementById("xp").innerText = xp;
 
-<script>
-function check(){
-let v=document.getElementById("test").value;
-document.getElementById("res").innerText =
-v=="am" ? "Correct ✔️" : "Wrong ❌";
+function addXP(val){
+  xp = parseInt(xp) + val;
+  localStorage.setItem("xp", xp);
+  document.getElementById("xp").innerText = xp;
 }
 
-function send(){
-let msg=document.getElementById("msg");
-let chat=document.getElementById("chat");
+function startApp(){ show('menu'); }
 
-if(!msg.value) return;
-
-chat.innerHTML += "You: "+msg.value+"<br>";
-
-let reply="I don't know 🤖";
-
-if(msg.value.includes("hello")) reply="Hi! 👋";
-if(msg.value.includes("go")) reply="go → went";
-
-chat.innerHTML += "Bot: "+reply+"<br>";
-
-msg.value="";
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
-</script>
 
-</body>
-  </html>
+function openQuiz(){show('quiz');}
+function openTest(){show('test');}
+function openGrammar(){show('grammar');}
+function openWords(){show('words');}
+function backMenu(){show('menu');}
+
+function quiz(type){
+  if(type==='correct'){
+    document.getElementById('quizResult').innerText='✅ Correct! +10 XP';
+    addXP(10);
+  }else{
+    document.getElementById('quizResult').innerText='❌ Wrong answer';
+  }
+}
+
+function checkTest(){
+  let v=document.getElementById('testInput').value.trim();
+  if(v==='am'){
+    document.getElementById('testResult').innerText='✅ Correct! +10 XP';
+    addXP(10);
+  }else{
+    document.getElementById('testResult').innerText='❌ Try again';
+  }
+}
+</script></body>
+</html>
